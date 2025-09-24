@@ -2,6 +2,9 @@ import profileImg from './assets/neto.jpeg'
 import linkedinIcon from './assets/linkedin.svg'
 import githubIcon from './assets/github.svg'
 import livreIcon from './assets/livre.svg'
+import carboncalcIcon from './assets/carboncalc.svg'
+import instagramIcon from './assets/instagram.svg'
+import discordIcon from './assets/discord.svg'
 
 export default function App() {
   const name = 'Neto'
@@ -27,6 +30,27 @@ export default function App() {
       url: 'https://livre.digital',
       description: 'Empresa de antecipação de recebíveis da qual sou sócio.',
       icon: livreIcon,
+    },
+    {
+      id: 'carboncalc',
+      title: 'CarbonCalc',
+      url: 'https://carboncalc-db4e.onrender.com',
+      description: 'Ferramenta para cálculo de balanço de carbono em propriedades rurais.',
+      icon: carboncalcIcon,
+    },
+    {
+      id: 'instagram',
+      title: 'Instagram',
+      url: 'https://www.instagram.com/reisnetooo',
+      description: 'Fotos ocasionais, um pouco de rotina e interesses pessoais.',
+      icon: instagramIcon,
+    },
+    {
+      id: 'discord',
+      title: 'Discord',
+      url: 'https://discord.com/users/706655466687561843',
+      description: 'Contato direto e comunidade técnica.',
+      icon: discordIcon,
     },
   ]
 
