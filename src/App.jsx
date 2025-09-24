@@ -36,7 +36,7 @@ export default function App() {
         <div className="profile-wrapper">
           <img src={profileImg} alt={`Foto de ${name}`} className="profile-photo" />
         </div>
-        <h1>{name} <span className="wave" aria-hidden="true">👋</span></h1>
+  <h1 className="name-heading"><span className="name-text">{name}</span><span className="wave" aria-hidden="true">👋</span></h1>
         <p className="tagline">
           Full‑stack developer specializing in Python (FastAPI) and React/TypeScript. I build secure APIs, data pipelines (BigQuery/GCS) and lightweight dashboards (Streamlit/NLP) that turn business logic into scalable products.
         </p>
