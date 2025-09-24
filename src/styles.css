@@ -10,6 +10,14 @@ button { padding: 10px 16px; border-radius: 10px; border: 1px solid #475569; bac
 button:hover { filter: brightness(1.1); }
 footer { margin-top: 48px; opacity: .65; font-size: .875rem; text-align: center; }
 
+/* Language switch */
+.lang-switch { position: fixed; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 50; }
+.lang-switch button { background: #1e293b; border: 1px solid #334155; padding: 4px; border-radius: 8px; cursor: pointer; width: 40px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .25s; }
+.lang-switch button:hover { background: #24324a; border-color: #475569; transform: translateY(-2px); }
+.lang-switch button.active { border-color: #38bdf8; box-shadow: 0 0 0 1px #0f172a, 0 0 0 3px rgba(56,189,248,.35); }
+.lang-switch img { max-width: 100%; max-height: 100%; display: block; }
+.lang-switch button:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+
 /* Portfolio adjustments */
 .hero { margin-bottom: 40px; text-align: center; }
 .tagline a { text-decoration: underline; text-underline-offset: 3px; }

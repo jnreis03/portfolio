@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react'
 import profileImg from './assets/neto.jpeg'
 import linkedinIcon from './assets/linkedin.svg'
 import githubIcon from './assets/github.svg'
@@ -5,69 +6,56 @@ import livreIcon from './assets/livre.svg'
 import carboncalcIcon from './assets/carboncalc.svg'
 import instagramIcon from './assets/instagram.svg'
 import discordIcon from './assets/discord.svg'
+import flagPt from './assets/flag-br.svg'
+import flagEn from './assets/flag-us.svg'
+import flagEs from './assets/flag-es.svg'
+import { translations, detectInitialLang } from './i18n'
 
 export default function App() {
-  const name = 'Neto'
+  const name = 'José Neto'
+  const [lang, setLang] = useState(detectInitialLang())
 
-  const links = [
-    {
-      id: 'linkedin',
-      title: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/jreis03/',
-      description: 'Experiência profissional, trajetória e networking.',
-      icon: linkedinIcon,
-    },
-    {
-      id: 'github',
-      title: 'GitHub',
-      url: 'https://github.com/jnreis03',
-      description: 'Projetos, código aberto e experimentos.',
-      icon: githubIcon,
-    },
-    {
-      id: 'livre',
-      title: 'Livre.digital',
-      url: 'https://livre.digital',
-      description: 'Empresa de antecipação de recebíveis da qual sou sócio.',
-      icon: livreIcon,
-    },
-    {
-      id: 'carboncalc',
-      title: 'CarbonCalc',
-      url: 'https://carboncalc-db4e.onrender.com',
-      description: 'Ferramenta para cálculo de balanço de carbono em propriedades rurais.',
-      icon: carboncalcIcon,
-    },
-    {
-      id: 'instagram',
-      title: 'Instagram',
-      url: 'https://www.instagram.com/reisnetooo',
-      description: 'Fotos ocasionais, um pouco de rotina e interesses pessoais.',
-      icon: instagramIcon,
-    },
-    {
-      id: 'discord',
-      title: 'Discord',
-      url: 'https://discord.com/users/706655466687561843',
-      description: 'Contato direto e comunidade técnica.',
-      icon: discordIcon,
-    },
-  ]
+  const t = translations[lang]
+
+  const links = useMemo(() => ([
+    { id: 'linkedin', url: 'https://www.linkedin.com/in/jreis03/', icon: linkedinIcon, ...t.links.linkedin },
+    { id: 'github', url: 'https://github.com/jnreis03', icon: githubIcon, ...t.links.github },
+    { id: 'livre', url: 'https://livre.digital', icon: livreIcon, ...t.links.livre },
+    { id: 'carboncalc', url: 'https://carboncalc-db4e.onrender.com', icon: carboncalcIcon, ...t.links.carboncalc },
+    { id: 'instagram', url: 'https://www.instagram.com/reisnetooo', icon: instagramIcon, ...t.links.instagram },
+    { id: 'discord', url: 'https://discord.com/users/706655466687561843', icon: discordIcon, ...t.links.discord },
+  ]), [t])
+
+  function changeLang(newLang) {
+    setLang(newLang)
+    try { localStorage.setItem('lang', newLang) } catch {}
+  }
 
   return (
     <main className="container" role="main">
+      <div className="lang-switch" aria-label="Language selector">
+        <button onClick={() => changeLang('pt')} className={lang==='pt'? 'active':''} aria-label="Português (Brasil)">
+          <img src={flagPt} alt="" />
+        </button>
+        <button onClick={() => changeLang('en')} className={lang==='en'? 'active':''} aria-label="English (US)">
+          <img src={flagEn} alt="" />
+        </button>
+        <button onClick={() => changeLang('es')} className={lang==='es'? 'active':''} aria-label="Español (ES)">
+          <img src={flagEs} alt="" />
+        </button>
+      </div>
       <header className="hero">
         <div className="profile-wrapper">
           <img src={profileImg} alt={`Foto de ${name}`} className="profile-photo" />
         </div>
   <h1 className="name-heading"><span className="name-text">{name}</span><span className="wave" aria-hidden="true">👋</span></h1>
-        <p className="tagline">
-          Full‑stack developer specializing in Python (FastAPI) and React/TypeScript. I build secure APIs, data pipelines (BigQuery/GCS) and lightweight dashboards (Streamlit/NLP) that turn business logic into scalable products.
+        <p className="tagline" lang={lang}>
+          {t.tagline}
         </p>
       </header>
 
-      <section aria-labelledby="acesso-rapido">
-        <h2 id="acesso-rapido" className="sr-only">Acesso rápido</h2>
+      <section aria-labelledby="quick-access">
+        <h2 id="quick-access" className="sr-only">{t.quickAccess}</h2>
         <div className="cards-grid">
           {links.map(link => (
             <a
@@ -91,7 +79,7 @@ export default function App() {
 
       <footer>
         <p>
-          © {new Date().getFullYear()} {name}.
+          © {new Date().getFullYear()} {name}. {t.footer}
         </p>
       </footer>
     </main>
