@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import profileImg from './assets/neto.jpeg'
+import profileImg from './assets/neto.webp'
 import linkedinIcon from './assets/linkedin.svg'
 import githubIcon from './assets/github.svg'
 import livreIcon from './assets/livre.svg'
