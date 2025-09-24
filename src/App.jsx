@@ -1,25 +1,77 @@
-import React, { useState } from 'react'
+import React from 'react'
+// Imagens (adicione seus arquivos em src/assets/ e ajuste os nomes conforme necessário)
+// Exemplo esperado: profile.jpg / linkedin.svg / github.svg / livre.svg
+import profileImg from './assets/neto.jpeg'
+import linkedinIcon from './assets/linkedin.svg'
+import githubIcon from './assets/github.svg'
+import livreIcon from './assets/livre.svg'
 
 export default function App() {
-  const [count, setCount] = useState(0)
+  // Assumindo nome completo para o portfolio; ajuste se quiser exibir apenas "Neto".
+  const name = 'Neto'
+
+  const links = [
+    {
+      id: 'linkedin',
+      title: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/jreis03/',
+      description: 'Experiência profissional, trajetória e networking.',
+      icon: linkedinIcon,
+    },
+    {
+      id: 'github',
+      title: 'GitHub',
+      url: 'https://github.com/jnreis03',
+      description: 'Projetos, código aberto e experimentos.',
+      icon: githubIcon,
+    },
+    {
+      id: 'livre',
+      title: 'Livre.digital',
+      url: 'https://livre.digital',
+      description: 'Empresa de antecipação de recebíveis da qual sou sócio.',
+      icon: livreIcon,
+    },
+  ]
 
   return (
-    <main className="container">
-      <header>
-        <h1>Olá, eu sou o Neto 👋</h1>
-        <p>Este é um starter super básico em React + Vite para publicar no Netlify.</p>
+    <main className="container" role="main">
+      <header className="hero">
+        <div className="profile-wrapper">
+          <img src={profileImg} alt={`Foto de ${name}`} className="profile-photo" />
+        </div>
+        <h1>{name} <span className="wave" aria-hidden="true">👋</span></h1>
+        <p className="tagline">
+          Full‑stack developer specializing in Python (FastAPI) and React/TypeScript. I build secure APIs, data pipelines (BigQuery/GCS) and lightweight dashboards (Streamlit/NLP) that turn business logic into scalable products.
+        </p>
       </header>
 
-      <section className="card">
-        <h2>Contador</h2>
-        <p>Valor atual: <strong>{count}</strong></p>
-        <button onClick={() => setCount((c) => c + 1)}>Incrementar</button>
+      <section aria-labelledby="acesso-rapido">
+        <h2 id="acesso-rapido" className="sr-only">Acesso rápido</h2>
+        <div className="cards-grid">
+          {links.map(link => (
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noreferrer"
+              className="card link-card"
+            >
+              <h3>
+                {link.icon && (
+                  <img src={link.icon} alt="" aria-hidden="true" className="icon" />
+                )}
+                {link.title} <span aria-hidden="true">↗</span>
+              </h3>
+              <p>{link.description}</p>
+            </a>
+          ))}
+        </div>
       </section>
 
       <footer>
         <p>
-          Código aberto em <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>. 
-          Deploy em <a href="https://www.netlify.com/" target="_blank" rel="noreferrer">Netlify</a>.
+          © {new Date().getFullYear()} {name}. Construído com React + Vite. Hospedado no Netlify.
         </p>
       </footer>
     </main>
