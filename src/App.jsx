@@ -1,13 +1,9 @@
-import React from 'react'
-// Imagens (adicione seus arquivos em src/assets/ e ajuste os nomes conforme necessário)
-// Exemplo esperado: profile.jpg / linkedin.svg / github.svg / livre.svg
 import profileImg from './assets/neto.jpeg'
 import linkedinIcon from './assets/linkedin.svg'
 import githubIcon from './assets/github.svg'
 import livreIcon from './assets/livre.svg'
 
 export default function App() {
-  // Assumindo nome completo para o portfolio; ajuste se quiser exibir apenas "Neto".
   const name = 'Neto'
 
   const links = [
@@ -71,7 +67,7 @@ export default function App() {
 
       <footer>
         <p>
-          © {new Date().getFullYear()} {name}. Construído com React + Vite. Hospedado no Netlify.
+          © {new Date().getFullYear()} {name}.
         </p>
       </footer>
     </main>
