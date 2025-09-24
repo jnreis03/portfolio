@@ -1,0 +1,32 @@
+# dependências
+node_modules/
+.pnpm-debug.log*
+
+# build
+dist/
+dist-ssr/
+*.local
+
+# testes
+coverage/
+.vitest/
+*.spec.js
+*.spec.jsx
+*.test.js
+*.test.jsx
+
+# configs de editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# lockfile (opcional manter no Git; se quiser ignorar, descomente a linha abaixo)
+# pnpm-lock.yaml

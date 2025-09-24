@@ -1,0 +1,10 @@
+# Netlify config para SPA (React + Vite)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Garante rotas funcionais em SPA (opcional)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
