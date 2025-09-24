@@ -10,12 +10,31 @@ import flagPt from './assets/flag-br.svg'
 import flagEn from './assets/flag-us.svg'
 import flagEs from './assets/flag-es.svg'
 import { translations, detectInitialLang } from './i18n'
+// Tech badges icons
+import reactIcon from './assets/react-svgrepo-com.svg'
+import tsIcon from './assets/typescript-official-svgrepo-com.svg'
+import nodeIcon from './assets/node-svgrepo-com.svg'
+import pythonIcon from './assets/python-svgrepo-com.svg'
+import fastapiIcon from './assets/fastapi-svgrepo-com.svg'
+import dockerIcon from './assets/docker-svgrepo-com.svg'
+import gcpIcon from './assets/google-cloud-1.svg'
 
 export default function App() {
   const name = 'José Neto'
   const [lang, setLang] = useState(detectInitialLang())
 
   const t = translations[lang]
+
+  function getAge() {
+    const today = new Date()
+    const birth = new Date(2003, 1, 26) // months are 0-based
+    let age = today.getFullYear() - birth.getFullYear()
+    const monthDiff = today.getMonth() - birth.getMonth()
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--
+    }
+    return age
+  }
 
   const links = useMemo(() => ([
     { id: 'linkedin', url: 'https://www.linkedin.com/in/jreis03/', icon: linkedinIcon, ...t.links.linkedin },
@@ -30,6 +49,16 @@ export default function App() {
     setLang(newLang)
     try { localStorage.setItem('lang', newLang) } catch {}
   }
+
+  const techs = useMemo(() => ([
+    { id: 'react', label: 'React', icon: reactIcon },
+    { id: 'typescript', label: 'TypeScript', icon: tsIcon },
+    { id: 'node', label: 'Node.js', icon: nodeIcon },
+    { id: 'python', label: 'Python', icon: pythonIcon },
+    { id: 'fastapi', label: 'FastAPI', icon: fastapiIcon },
+    { id: 'docker', label: 'Docker', icon: dockerIcon },
+    { id: 'gcp', label: 'Google Cloud', icon: gcpIcon },
+  ]), [])
 
   return (
     <main className="container" role="main">
@@ -50,12 +79,25 @@ export default function App() {
         </div>
   <h1 className="name-heading"><span className="name-text">{name}</span><span className="wave" aria-hidden="true">👋</span></h1>
         <p className="tagline" lang={lang}>
-          {t.tagline}
+          {t.tagline.replace('{age}', String(getAge()))}
         </p>
       </header>
 
       <section aria-labelledby="quick-access">
         <h2 id="quick-access" className="sr-only">{t.quickAccess}</h2>
+        <div className="tech-icons" aria-label="Tecnologias" role="list">
+          {techs.map(tech => (
+            <span
+              key={tech.id}
+              className="tech-icon"
+              title={tech.label}
+              role="img"
+              aria-label={tech.label}
+            >
+              <img src={tech.icon} alt={tech.label} />
+            </span>
+          ))}
+        </div>
         <div className="cards-grid">
           {links.map(link => (
             <a
