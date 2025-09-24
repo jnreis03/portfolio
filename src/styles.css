@@ -11,7 +11,8 @@ button:hover { filter: brightness(1.1); }
 footer { margin-top: 48px; opacity: .65; font-size: .875rem; text-align: center; }
 
 /* Language switch */
-.lang-switch { position: fixed; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 50; }
+/* Use sticky so it stays visible without overlapping content while scrolling */
+.lang-switch { position: top; top: 10px; display: flex; gap: 6px; z-index: 50; margin-bottom: 12px; }
 .lang-switch button { background: #1e293b; border: 1px solid #334155; padding: 0px; border-radius: 5px; cursor: pointer; width: 40px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .25s; }
 .lang-switch button:hover { background: #24324a; border-color: #475569; transform: translateY(-2px); }
 .lang-switch button.active { border-color: #38bdf8; box-shadow: 0 0 0 1px #0f172a, 0 0 0 3px rgba(56,189,248,.35); }
