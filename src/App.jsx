@@ -79,7 +79,7 @@ export default function App() {
 
       <footer>
         <p>
-          © {new Date().getFullYear()} {name}. {t.footer}
+          © {new Date().getFullYear()} NetoDev
         </p>
       </footer>
     </main>
