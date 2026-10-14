@@ -3,6 +3,9 @@
 body { margin: 0; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
 a { color: inherit; }
 .container { max-width: 720px; margin: 16px auto; padding: 0 16px; }
+@media (min-width: 960px) {
+	.container { max-width: 1040px; }
+}
 header h1 { margin: 0 0 8px; font-size: 2.25rem; }
 header p { margin: 0 0 24px; opacity: .9; }
 .card { background: #111827; border: 1px solid #334155; padding: 20px; border-radius: 12px; }
@@ -10,33 +13,110 @@ button { padding: 10px 16px; border-radius: 10px; border: 1px solid #475569; bac
 button:hover { filter: brightness(1.1); }
 footer { margin-top: 48px; opacity: .65; font-size: .875rem; text-align: center; }
 
-/* Language switch */
-/* Use sticky so it stays visible without overlapping content while scrolling */
-.lang-switch { position: top; top: 10px; display: flex; gap: 6px; z-index: 50; margin-bottom: 12px; }
-.lang-switch button { background: #1e293b; border: 1px solid #334155; padding: 0px; border-radius: 5px; cursor: pointer; width: 40px; height: 32px; display: flex; align-items: center; justify-content: center; transition: background .25s, border-color .25s, transform .25s; }
-.lang-switch button:hover { background: #24324a; border-color: #475569; transform: translateY(-2px); }
-.lang-switch button.active { border-color: #38bdf8; box-shadow: 0 0 0 1px #0f172a, 0 0 0 3px rgba(56,189,248,.35); }
-.lang-switch img { max-width: 100%; max-height: 100%; display: block; border-radius: 4px; }
-.lang-switch button:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+/* Language switch (Single triple-state carousel button) */
+.lang-switch { display: flex; z-index: 50; margin-bottom: 14px; }
+.lang-toggle {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 40px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.45);
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+.lang-toggle:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px -2px rgba(56, 189, 248, 0.4);
+}
+.lang-toggle:active {
+  transform: translateY(0) scale(0.96);
+}
+.lang-toggle:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+.flag-reel {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  transform: translateY(0);
+}
+/* Micro peek on hover when resting */
+.lang-toggle:hover:not(.switching):not(.peeking) .flag-reel {
+  transform: translateY(-16%);
+  transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1);
+}
+/* Smooth roll to next flag when clicked */
+.lang-toggle.switching .flag-reel {
+  transform: translateY(-100%);
+  transition: transform 0.34s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+/* Idle Peek Hint Animation */
+@keyframes flagPeekHint {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-44%); }
+  55% { transform: translateY(-44%); }
+  72% { transform: translateY(-4%); }
+  86% { transform: translateY(-8%); }
+  100% { transform: translateY(0); }
+}
+.lang-toggle.peeking .flag-reel {
+  animation: flagPeekHint 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.flag-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+.flag-item.current { top: 0; }
+.flag-item.next { top: 100%; }
+.flag-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-toggle.peeking .flag-reel { animation: none; }
+  .lang-toggle.switching .flag-reel { transition: none; }
+}
 
 /* Portfolio adjustments */
 .hero { margin-bottom: 30px; text-align: center; }
+.tagline { max-width: 680px; margin-left: auto; margin-right: auto; }
 .tagline a { text-decoration: underline; text-underline-offset: 3px; }
 
-.cards-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: stretch; }
-@media (min-width: 640px) {
-	/* Força layout 2 colunas em telas médias para melhor equilíbrio visual */
-	.cards-grid { grid-template-columns: repeat(2, 1fr); }
+.cards-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+@media (min-width: 960px) {
+	.cards-grid { grid-template-columns: repeat(4, 1fr); }
 }
-@media (min-width: 1024px) {
-	/* Em telas grandes, se houver mais de 4 itens, mantém 3 colunas para não ficar muito largo */
-	.cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 640px) {
+	.card { padding: 14px 12px; }
+	.cards-grid { gap: 10px; }
+	.link-card h3 { font-size: 0.95rem; margin-bottom: 6px; }
+	.link-card p { font-size: 0.8rem; line-height: 1.4; }
 }
 .link-card { position: relative; text-decoration: none; transition: border-color .25s, background .25s, transform .25s, box-shadow .25s; display: flex; flex-direction: column; }
 .link-card h3 { margin: 0 0 10px; font-size: 1.02rem; display: flex; align-items: center; gap: 6px; font-weight: 600; }
 .link-card p { margin: 0; font-size: .9rem; opacity: .85; }
 .link-card:hover { border-color: #64748b; background: #1e293b; transform: translateY(-3px); box-shadow: 0 4px 14px -4px rgba(0,0,0,.45); }
 .link-card span { opacity: .6; }
+
+/* Sublinks inside cards (e.g., iOS and Android store links) */
+.card-title-link { color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.card-sublinks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 10px; }
+.sublink-badge { display: inline-flex; align-items: center; gap: 3px; font-size: .75rem; font-weight: 500; padding: 3px 8px; border-radius: 6px; background: #1e293b; border: 1px solid #334155; color: #94a3b8; text-decoration: none; transition: background .2s, color .2s, border-color .2s, transform .2s; }
+.sublink-badge:hover { background: #334155; color: #38bdf8; border-color: #38bdf8; transform: translateY(-1px); }
+.sublink-badge:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
 
 /* Sutil delineação ao focar via teclado */
 .link-card:focus-visible { outline: 2px solid #38bdf8; outline-offset: 3px; }
@@ -78,7 +158,7 @@ footer { margin-top: 48px; opacity: .65; font-size: .875rem; text-align: center;
 .profile-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Icons inside cards */
-.icon { width: 18px; height: 18px; display: inline-block; filter: brightness(1.2); }
+.icon { width: 20px; height: 20px; display: inline-block; border-radius: 4px; object-fit: contain; flex-shrink: 0; }
 
 /* Removed media query that left-aligned hero on larger screens to keep everything centered */
 
